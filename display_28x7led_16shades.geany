@@ -9,7 +9,7 @@ indent_mode=2
 
 [project]
 name=display_28x7led_16shades
-base_path=/home/fuho/projects/display_28x7led_16shades/
+base_path=/home/fuho/Projects/display_28x7led_16shades/
 description=
 file_patterns=*.*;
 
@@ -19,10 +19,11 @@ long_line_column=79
 
 [files]
 current_page=0
-FILE_NAME_0=1536;C++;0;16;0;1;0;/home/fuho/projects/display_28x7led_16shades/src/sketch.ino;0;4
+FILE_NAME_0=1028;C++;0;16;0;1;0;/home/fuho/Projects/display_28x7led_16shades/src/sketch.ino;0;4
+FILE_NAME_1=0;C++;0;16;0;1;0;/home/fuho/Projects/LED_flip_flop_display/flip_flop_196_led_display/flip_flop_196_led_display.ino;0;4
 
 [VTE]
-last_dir=/home/fuho/projects/display_28x7led_16shades
+last_dir=/home/fuho/Dropbox/Projects/display_28x7led_16shades
 
 [gproject]
 source_patterns=*.c;*.C;*.cpp;*.cxx;*.c++;*.cc;*.ino;
@@ -51,8 +52,8 @@ EX_01_CM=
 EX_01_WD=
 C++FT_00_LB=Ino-_Build
 C++FT_00_CM=ino build
-C++FT_00_WD=/home/fuho/projects/display_28x7led_16shades
+C++FT_00_WD=/home/fuho/Projects/display_28x7led_16shades
 C++FT_01_LB=Ino-_Upload
 C++FT_01_CM=ino upload
-C++FT_01_WD=/home/fuho/projects/display_28x7led_16shades
+C++FT_01_WD=/home/fuho/Projects/display_28x7led_16shades
 filetypes=C++;
