@@ -19,8 +19,9 @@ long_line_column=79
 
 [files]
 current_page=0
-FILE_NAME_0=1028;C++;0;16;0;1;0;/home/fuho/Projects/display_28x7led_16shades/src/sketch.ino;0;4
-FILE_NAME_1=0;C++;0;16;0;1;0;/home/fuho/Projects/LED_flip_flop_display/flip_flop_196_led_display/flip_flop_196_led_display.ino;0;4
+FILE_NAME_0=1734;C++;0;16;0;1;0;/home/fuho/Projects/display_28x7led_16shades/src/sketch.ino;0;4
+FILE_NAME_1=3685;C++;0;16;0;1;0;/home/fuho/Projects/LED_flip_flop_display/flip_flop_196_led_display/flip_flop_196_led_display.ino;0;4
+FILE_NAME_2=125;Conf;0;16;0;1;0;/home/fuho/Projects/display_28x7led_16shades/ino.ini;0;4
 
 [VTE]
 last_dir=/home/fuho/Dropbox/Projects/display_28x7led_16shades
