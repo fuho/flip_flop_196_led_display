@@ -2,9 +2,9 @@
 #define DEBUG false
 #define VIDEO_RAM_LENGTH 196
 #define VERTICAL_SEGMENT_ID 4
+#define DISPLAY_SHADES 14
 #define DISPLAY_ROWS 7
 #define DISPLAY_COLUMN_SEGMENTS 4
-#define DISPLAY_SHADES 7
 #define DISPLAY_SEGMENT_WIDTH 7
 #define DISPLAY_ROW_LENGTH 28
 #define pass; __asm__("nop\n\t");
@@ -106,12 +106,12 @@ void iterate(){
 // other functions ############################################################
 
 void gradient_fill(){
-    byte color = 0;
+    byte color = DISPLAY_SHADES;
     for (int i = 0; i < VIDEO_RAM_LENGTH; i++){
+        color--;
         video_ram[i] = color;
-        color++;
-        if(color == DISPLAY_SHADES){
-            color = 0;
+        if(color == 0){
+            color = DISPLAY_SHADES;
         }
     }
 }
