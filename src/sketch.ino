@@ -4,7 +4,7 @@
 #define VERTICAL_SEGMENT_ID 4
 #define DISPLAY_ROWS 7
 #define DISPLAY_COLUMN_SEGMENTS 4
-#define DISPLAY_SHADES 98
+#define DISPLAY_SHADES 7
 #define DISPLAY_SEGMENT_WIDTH 7
 #define DISPLAY_ROW_LENGTH 28
 #define pass; __asm__("nop\n\t");
@@ -50,14 +50,13 @@ void loop() {
 // ############################################################################
 // horizontal (left to right top to bottom) drawing procedure
 void reset_screen(){
-    PORTD = 252;    // set LSB to none
     PORTB = 1;      // set one last pixel to none
-    pass;
+    PORTD = 252;    // set LSB to none
     PORTB = 31;     // burn it to 4 horozontal flip-flops
 
-    PORTD = 0;
-    PORTB = 0;
     pass;
+    PORTB = 0;
+    PORTD = 0;
     PORTB = 32;
 }
 void draw_segment(){
@@ -66,36 +65,13 @@ void draw_segment(){
     //             ??VDCBA6 543210??    pixel data: 100 0000 row: 1 segment:2
     //                                  Load Pixel Data (Horizontal negative)
     byte pixel_data = (~get_segment_data()) << 1;
-    dbg(" ports start: ", word(PINB,PIND));
-    PORTD = pixel_data << 1;
-    //dbg("  PORTD: ", PIND);
     PORTB = pixel_data >> 7;
-    //dbg("  PORTB: ", PINB);
-    pass;
+    PORTD = pixel_data << 1;
     PORTB = PINB | (2 << iter_segment);
-    //dbg("  PORTB: ", PINB);
-    /*
-    PORTD =252; // ???????? 111111??    <- send LSB
-    PORTB =0;   // ??000000 111111??    <- send MSB
-    PORTB =8;   // ??001000 111111??    <- trigger flip-flop flip
-    */
-    //dbg(" ports middle: ", word(PINB,PIND));
     
-    PORTD = 4 << iter_row;
-    //dbg("  PORTD: ", PIND);
     PORTB = (2 << iter_row) >> 7;
-    //dbg("  PORTB: ", PORTB);
-    pass;
+    PORTD = 4 << iter_row;
     PORTB = PINB | 32;
-    //dbg("  PORTB: ", PINB);
-    /*
-    //                                 Load up row info (Vertical positive)
-    PORTD=8;    // ???????? 000001??    <- 
-    PORTB=0;    // ??000000 000001??
-    PORTB=32;   // ??100000 000001??
-    PORTB=0;    // ??000000 000001??    <- cleanup (for next raising edge)
-    */
-    //dbg(" ports end: ", word(PINB,PIND));
 }
 byte get_segment_data(){
     // returns a byte representing a segment at current position and time
@@ -110,8 +86,6 @@ byte get_segment_data(){
             data = data | 1;
         }
     }
-    //data = data >> 1;
-    dbg("@out segment_data: ", data);
     return data;
 }
 void iterate(){
