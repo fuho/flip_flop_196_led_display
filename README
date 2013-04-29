@@ -1,0 +1,26 @@
+# LED Display
+→28  in 4 7pixel segments 
+↓7
+| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
+| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
+| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
+| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
+| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
+| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
+| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
+
+
+There are  5 8 bit flip-flops in this display. Each one only utilizes 7 lower bits.
+These are addressed by rudimentary flag based 5bit address bus.
+Since only 7 outputs are used on each flip-flop, we only need 7 bit data bus.
+This means that to run this display 12 digital output pins are needed.
+  
+I am using Arduino Nano v3, which has PORTD and PORTB (for faster control of
+output pins),unfortunately neither of those hasd all of 8 output pins available.
+PORTD has pins 8-13 available for output and pins 14 and 15 are used for x-tal.
+PORTB is full 8 bit wide (0-7), but pin 0 and 1 are used for serial comm.
+  
+|  Port B   |   Port D  |
+| ##6543210 | 765432##  |
+  
+Since the data doesn't fit in either ports, shofting had to be used.
