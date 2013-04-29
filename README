@@ -1,16 +1,17 @@
 # LED Display
-→28  in 4 7pixel segments 
-↓7
-| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
-| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
-| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
-| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
-| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
-| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
-| | | | | | | |.| | | | | | | |.| | | | | | | |.| | | | | | | |
 
+196 LEDs in →28 columns (in 4 7pixel segments ) and ↓7 rows
 
-There are  5 8 bit flip-flops in this display. Each one only utilizes 7 lower bits.
+d    ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
+D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+
+There are  5 8 bit flip-flops (74AHC574) in this display. Each one only utilizes 7 lower bits.
 These are addressed by rudimentary flag based 5bit address bus.
 Since only 7 outputs are used on each flip-flop, we only need 7 bit data bus.
 This means that to run this display 12 digital output pins are needed.
@@ -24,3 +25,12 @@ PORTB is full 8 bit wide (0-7), but pin 0 and 1 are used for serial comm.
 | ##6543210 | 765432##  |
   
 Since the data doesn't fit in either ports, shofting had to be used.
+
+  
+  
+## Flip-Flop info:
+
+74AHC574
+20 pin 8 bit raising edge trigered flip-flop flip or flop :)
+The chip reads (and imediately outputs) inputs when transition from 0 to 1
+occures onon pin CP (let's call it trigger)
