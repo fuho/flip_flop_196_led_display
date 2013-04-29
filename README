@@ -2,14 +2,16 @@
 
 196 LEDs in →28 columns (in 4 7pixel segments ) and ↓7 rows
 
-d    ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
-D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
-D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
-D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
-D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
-D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
-D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
-D → |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+    A A A A A A A   B B B B B B B   C C C C C C C   D D D D D D D
+    0 1 2 4 5 6 7   0 1 2 3 4 5 6   0 1 2 4 5 6 7   0 1 2 3 4 5 6
+
+V0 |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+V1 |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+V3 |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+V4 |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+V5 |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+V6 |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
+V7 |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#| |#|#|#|#|#|#|#|
 
 There are  5 8 bit flip-flops (74AHC574) in this display. Each one only utilizes 7 lower bits.
 These are addressed by rudimentary flag based 5bit address bus.
@@ -21,16 +23,35 @@ output pins),unfortunately neither of those hasd all of 8 output pins available.
 PORTD has pins 8-13 available for output and pins 14 and 15 are used for x-tal.
 PORTB is full 8 bit wide (0-7), but pin 0 and 1 are used for serial comm.
   
-|  Port B   |   Port D  |
-| ##6543210 | 765432##  |
-  
-Since the data doesn't fit in either ports, shofting had to be used.
+    |  Port B  |   Port D  |
+    | ##543210 | 765432##  |
 
+gives us 12pins total (we need 7 for data and 5 for flag address bus)
+
+Since the 7 bit data doesn't fit on either ports, shifting had to be used.
+
+    |  Port B  |   Port D  |
+    | ##fffffd | dddddd##  |
+    | ##VDCBA6 | 543210##  |
+
+where fA, fB, fC, fD are bits to address each of the horizontal flip-flops
+ and fV is address bit of the vertical flip flop
+ and d0..d6 are 7 data bits (inputs of flip-flops)
+  
+Sending data to flip-flops and triggering has to happen in 3 steps (thanks to
+positive edge nature of the trigger)
+
+    |  Port B  |   Port D  |
+1:  |          | xxxxxx??  |  write lower part of data to port D
+2:  | ??00000x |           |  write last missing bit to port B
+3:  | ??aaaaax |           |  trigger targetted flip-flops by positive edge     
   
   
 ## Flip-Flop info:
 
 74AHC574
-20 pin 8 bit raising edge trigered flip-flop flip or flop :)
+20 pin 8 bit, raising edge trigered flip-flop read
 The chip reads (and imediately outputs) inputs when transition from 0 to 1
-occures onon pin CP (let's call it trigger)
+occures on pin CP (let's call it trigger). There is also !OE pin, which is 
+soldered to ground, outputs are therefore always enabled and changes on inputs
+reflect on output immediately after trigger even occurs. 
